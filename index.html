@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikanoppapeli</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+    <div class="container">
+        <img src="kuvat/sika.png" alt="Sika" width="200" height="200">
+        <h1>SIKANOPPAPELI</h1>
+        <p>Hei! Tervetuloa pelaamaan sikanoppapeliä. Peli on yksinkertainen ja sen säännöt ovat seuraavat:</p>
+        <h2>Yhden nopan peli:</h2>
+        <ol>
+            <li>Pelaaja heittää noppaa niin monta kertaa kuin haluaa.</li>
+            <li>Jos pelaaja kuitenkin saa silmäluvun 1, hänen pistonsa nollaantuvat ja vuoro siirtyy seuraavalle pelaajalle.</li>
+            <li>Pelaaja voi lopettaa vuoronsa milloin tahansa ja tallentaa pisteensä.</li>
+            <li>Ensimmäisenä 100 pistettä saavuttanut pelaaja voittaa pelin.</li>
+        </ol>
+        <h2>Kahden nopan peli:</h2>
+        <ol>
+            <li>Pelaaja heittää kahta noppaa kerrallaan ja saa pisteitä niiden silmäluvuista.</li>
+            <li>Pelaaja voi heittää noppia niin monta kertaa kuin haluaa.</li>
+            <li>Jos pelaaja kuitenkin saa toisen nopan silmäluvuksi 1, hänen pistonsa nollaantuvat ja vuoro siirtyy seuraavalle pelaajalle.</li>
+            <li>Jos pelaaja heittää nopilla saman silmäluvun, pisteet tuplaantuvat.</li>
+            <li>Mikäli pelaaja kuitenkin heittää tuplat kolmesti peräkkäin, hänen pisteensä nollaantuvat ja vuoro siirtyy seuraavalle pelaajalle.</li>
+            <li>Pelaaja voi lopettaa vuoronsa milloin tahansa ja tallentaa pisteensä.</li>
+            <li>Ensimmäisenä 100 pistettä saavuttanut pelaaja voittaa pelin.</li>
+        </ol>
+        <p>Onnea peliin!</p>
+    </div>
+    <div class="choice">
+        <button onclick="location.href='yhdennopanpeli.html'">Yhden nopan peli</button>
+        <button onclick="location.href='kahdennopanpeli.html'">Kahden nopan peli</button>
+    </div>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>
