@@ -7,12 +7,59 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <header>
+        <img src="kuvat/sika.png" alt="Sika" width="200" height="200">
         <h1>SIKANOPPAPELI</h1>
-        <p>Heitä niitä noppia!</p>
-        <p>Onnea peliin!</p>
+        <h2>Kahden nopan peli</h2>
+    </header>
+    <div class="mycontainer">
+        <div id="pelaajat">
+            <div class="pelaaja" id="pelaaja1">
+                <input type="text" id="nimi1" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(1)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet1">0</span></p>
+            </div>
+            <div class="pelaaja" id="pelaaja2">
+                <input type="text" id="nimi2" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(2)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet2">0</span></p>
+            </div>
+            <div class="pelaaja" id="pelaaja3">
+                <input type="text" id="nimi3" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(3)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet3">0</span></p>
+            </div>
+            <div class="pelaaja" id="pelaaja4">
+                <input type="text" id="nimi4" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(4)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet4">0</span></p>
+            </div>
+            <div class="pelaaja" id="pelaaja5">
+                <input type="text" id="nimi5" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(5)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet5">0</span></p>
+            </div>
+            <div class="pelaaja" id="pelaaja6">
+                <input type="text" id="nimi6" placeholder="Syötä nimesi">
+                <button onclick="tallennaNimi(6)">Tallenna nimi</button>
+                <p>Pisteet: <span id="pisteet6">0</span></p>
+            </div>
+        </div>
+        <div id="viesti" style="color: rgb(0, 0, 0); font-size: 2rem;"></div>
+        <div id="viesti2" style="color: rgb(0, 0, 0); font-size: 2rem;"></div>
     </div>
-    <button onclick="location.href='index.html'">Aloita uusi peli</button>
-    <script src="scripts.js"></script>
+    <div class="nopat">
+        <img id="noppaKuva" src="kuvat/dice_one.png" alt="noppa"> 
+        <img id="noppaKuva2" src="kuvat/dice_one.png" alt="noppa">
+    </div>
+    <div class="mycontainer2">
+        <button id="heita" onclick="heitaNoppaa()">Heitä noppia</button> 
+        <button id="lopeta" onclick="lopetaVuoroNappi()">Lopeta vuoro</button>
+    </div>
+    <div class="choice2">
+        <button onclick="location.href='index.html'">Päävalikkoon</button>
+        <button id="uusiPeli" onclick="uusiPeli()">Uusi peli</button>
+    </div>
+    <script src="kahdennopan.js"></script>
 </body>
 </html>
