@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Lisätään kuuntelijat painikkeille
+    document.getElementById("heita").addEventListener("click", heitaNoppaa);
+    document.getElementById("lopeta").addEventListener("click", lopetaVuoro);
+    document.getElementById("uusiPeli").addEventListener("click", uusiPeli);
+});
 
 let nimet = [];                                                                                                     // Tallentaa pelaajien nimet
 let aktiivinenPelaaja = 1;                                                                                          // Aloitetaan pelaajasta 1
@@ -21,85 +27,85 @@ function tallennaNimi(pelaajaNumero) {
         }
     }
 }
-
-function heitaNoppaa() {
-    if (tallennettuNimiLkm < 2) {
+function heitaNoppaa() {                                                                                            // Nopan heittäminen
+    if (tallennettuNimiLkm < 2) {                                                                                   // Tarkistetaan, että vähintään 2 pelaajaa on tallentanut nimen
         document.getElementById("viesti").textContent = "Tarvitaan vähintään 2 pelaajaa, jotta peli voi alkaa!";
-        return;                                                                                                     // Estetään noppaa heittämästä, jos pelaajia ei ole tarpeeksi
-    }
-
-    // Tarkistetaan onko joku heittänyt 100 pistettä
-    if (pisteet.some(piste => piste >= 100)) {
-        document.getElementById("viesti").textContent = "Peli on päättynyt! Voittaja: " + nimet[pisteet.indexOf(Math.max(...pisteet))];
-        return;                                                                                                     // Jos on niin lopetetaan peli
-    }
-
-    let nopanNumero = Math.floor(Math.random() * 6) + 1;                                                            // Satunnainen numero 1-6
-    let noppaKuva = "kuvat/dice_" + ["one", "two", "three", "four", "five", "six"][nopanNumero - 1] + ".png";
-
-    let noppaElementti = document.getElementById("noppaKuva");
-    noppaElementti.src = noppaKuva;                                                                                 // Päivitetään nopan kuva
-
-    // Päivitetään viesti ja pisteet
-    let viesti = document.getElementById("viesti");
-
-    if (nopanNumero === 1) {    
-        kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] = 0;                                                        // Nollataan vain kuluvan kierroksen pisteet
-        document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1];        // Päivitetään kokonaispisteet
-        viesti.textContent = nimet[aktiivinenPelaaja -1] + " heitti 1, kierroksen pisteet nollataan ja vuoro vaihtuu!";  // Ilmoitetaan, että pelaaja heitti 1:n
-        vuoronVaihto();                                                                                             // Vaihdetaan vuoro
-    } else {
-        kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] += nopanNumero;                                             // Lisätään nopan tulos kuluvan kierroksen pisteisiin
-        document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1]; // Näytetään kokonaispisteet
-        viesti.textContent = nimet[aktiivinenPelaaja - 1] + " heitti " + nopanNumero;
-    }
-}
-
-function lopetaVuoroNappi() {
-    lopetaVuoro();
-}
-
-function lopetaVuoro() {
-
-    if (tallennettuNimiLkm < 2) {                                                                              // Tarkistetaan onko tarpeeksi pelaajia
-        document.getElementById("viesti").textContent = "Tarvitaan vähintään 2 pelaajaa!";                     // Ilmoitetaan, jos ei ole
+        console.error("Ei tarpeeksi pelaajia");
         return;
     }
 
-    // Lisää kuluvan kierroksen pisteet kokonaispisteisiin
-    pisteet[aktiivinenPelaaja - 1] += kuluvanKierroksenPisteet[aktiivinenPelaaja - 1];
-    kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] = 0;                                                        // Nollataan kuluvan kierroksen pisteet
+    let nopanNumero = Math.floor(Math.random() * 6) + 1;                                                            // Arvotaan nopan numero väliltä 1-6
+    let noppaKuva = "kuvat/dice_" + ["one", "two", "three", "four", "five", "six"][nopanNumero - 1] + ".png";       // Valitaan nopan kuva nopan numeron perusteella
+
+    let noppaElementti = document.getElementById("noppaKuva");                                                      // Haetaan nopan kuva
+    noppaElementti.src = noppaKuva;                                                                                 // Vaihdetaan nopan kuva
 
     let viesti = document.getElementById("viesti");
 
-    // Tarkistetaan, voittaako pelaaja
-    if (pisteet[aktiivinenPelaaja - 1] >= 100) {                                                                // Kun pelaaja voittaa saavuttaessaan 100 pistettä
+    if (nopanNumero === 1) {                                                                                                // Jos nopan numero on 1
+        kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] = 0;                                                                // Nollataan kuluvan kierroksen pisteet
+        document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1];                // Päivitetään pelaajan pisteet
+        viesti.textContent = nimet[aktiivinenPelaaja - 1] + " heitti 1, kierroksen pisteet nollataan ja vuoro vaihtuu!";    // Ilmoitetaan tuloksesta
+        console.log("Ykkönen heitetty, vuoro vaihtuu");                                                                     // Tulostetaan konsoliin tieto ykkösen heittämisestä
+        vuoronVaihto();                                                                                                     // Vaihdetaan vuoro
+    } else {
+        kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] += nopanNumero;                                                     // Lisätään nopan numero kuluvan kierroksen pisteisiin
+        document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1];  // Päivitetään pelaajan pisteet
+        viesti.textContent = nimet[aktiivinenPelaaja - 1] + " heitti " + nopanNumero;                                       // Ilmoitetaan tuloksesta
+        console.log("Pelaaja " + aktiivinenPelaaja + " heitti " + nopanNumero);                                             // Tulostetaan konsoliin tieto nopan heittämisestä
+    }
+
+    // Tarkistetaan voitto
+    if (pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] >= 100) {  
+        pisteet[aktiivinenPelaaja - 1] += kuluvanKierroksenPisteet[aktiivinenPelaaja - 1]; 
+        document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1]; 
         viesti.textContent = "Pelaaja " + nimet[aktiivinenPelaaja - 1] + " on voittaja! Pisteet: " + pisteet[aktiivinenPelaaja - 1];
-        return;                                                                                                 // Lopetetaan peli
+        console.log("Peli päättyi");
+        document.getElementById("heita").disabled = true;
+        return;
+    }
+}
+
+function lopetaVuoro() {                                                                                                                                                                           
+    if (tallennettuNimiLkm < 2) {   
+        document.getElementById("viesti").textContent = "Tarvitaan vähintään 2 pelaajaa!";
+        return; 
+    }
+
+    pisteet[aktiivinenPelaaja - 1] += kuluvanKierroksenPisteet[aktiivinenPelaaja - 1];
+    kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] = 0;
+
+    let viesti = document.getElementById("viesti");
+
+    // Tarkistetaan voitto
+    if (pisteet[aktiivinenPelaaja - 1] >= 100) {        
+        viesti.textContent = "Pelaaja " + nimet[aktiivinenPelaaja - 1] + " on voittaja! Pisteet: " + pisteet[aktiivinenPelaaja - 1];
+        document.getElementById("heita").disabled = true;
+        return; 
     }
 
     vuoronVaihto();
     viesti.textContent = "Pelaajan " + nimet[aktiivinenPelaaja - 1] + " vuoro";
-
 }
 
+// Vuoron vaihto 
 function vuoronVaihto() {
-    console.log("Vuoronvaihto");                                                                                        
-    aktiivinenPelaaja++;                                                                                        // Siirrytään seuraavaan pelaajaan
+    console.log("Vuoronvaihto");
+    aktiivinenPelaaja++;                                                                         
     if (aktiivinenPelaaja > tallennettuNimiLkm) {
-        aktiivinenPelaaja = 1;                                                                                  // Palataan ensimmäiseen pelaajaan, kun vuorot on käyty läpi
+        aktiivinenPelaaja = 1;                                                                    
     }
 }
 
+// Uuden pelin aloittaminen, nollataan kaikki arvot 
 function uusiPeli() {
     console.log("Uusi peli");
-    nimet = [];                                                                                                 // Tyhjennetään nimet
-    aktiivinenPelaaja = 1;                                                                                      // Aloitetaan pelaajasta 1
-    pisteet = [0, 0, 0, 0, 0, 0];                                                                               // Nollataan pisteet
-    tallennettuNimiLkm = 0;                                                                                     // Nollataan tallennettujen nimien määrä
-    kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];                                                              // Nollataan kuluvan kierroksen pisteet
+    nimet = [];
+    aktiivinenPelaaja = 1;
+    pisteet = [0, 0, 0, 0, 0, 0];
+    tallennettuNimiLkm = 0;
+    kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];
 
-    // Tyhjennetään nimikentät
     for (let i = 1; i <= 6; i++) {
         document.getElementById("nimi" + i).value = "";
         document.getElementById("nimi" + i).disabled = false;
@@ -108,13 +114,15 @@ function uusiPeli() {
         document.getElementById("nimi" + i).style.textAlign = "left";
     }
 
-    // Tyhjennetään pisteet
     for (let i = 1; i <= 6; i++) {
         document.getElementById("pisteet" + i).textContent = "0";
     }
 
-    // Tyhjennetään viesti
     document.getElementById("viesti").textContent = "Kirjoita pelaajien nimet ja aloita peli!";
-    document.getElementById("noppaKuva").src = "kuvat/dice_one.png";                                            // Palautetaan nopan kuva
-    document.getElementById("noppaKuva2").src = "kuvat/dice_one.png";                                           // Palautetaan toisen nopan kuva
+    document.getElementById("noppaKuva").src = "kuvat/dice_one.png"; 
+    document.getElementById("heita").disabled = false; 
+
+    for (let i = 1; i <= 6; i++) {
+        document.getElementById("pisteet" + i).textContent = "0";   
+    }
 }
