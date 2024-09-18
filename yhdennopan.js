@@ -1,16 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Lisätään kuuntelijat painikkeille
+    // Kuuntelijat painikkeille
     document.getElementById("heita").addEventListener("click", heitaNoppaa);
     document.getElementById("lopeta").addEventListener("click", lopetaVuoro);
     document.getElementById("uusiPeli").addEventListener("click", uusiPeli);
+    
+    // Kuuntelija tavoitepisteille
+    document.getElementById("tavoitepisteet").addEventListener("change", function() {
+        tavoitePisteet = parseInt(this.value);
+        document.getElementById("viesti").textContent = "Tavoitepistemäärä asetettu: " + tavoitePisteet;
+    });
 });
 
+let tavoitePisteet = 100;                                                                                           // Peli päättyy, kun pelaaja saavuttaa tämän pistemäärän
 let nimet = [];                                                                                                     // Tallentaa pelaajien nimet
 let aktiivinenPelaaja = 1;                                                                                          // Aloitetaan pelaajasta 1
 let pisteet = [0, 0, 0, 0, 0, 0];                                                                                   // Pisteet kaikille pelaajille (enintään 6 pelaajaa)
 let tallennettuNimiLkm = 0;                                                                                         // Seuraa montako pelaajaa on tallentanut nimen
 let kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];                                                                  // Kuluvan kierroksen pisteet
-
 
 function tallennaNimi(pelaajaNumero) {
     let nimi = document.getElementById("nimi" + pelaajaNumero).value.trim();                                        // Haetaan pelaajan nimi ja poistetaan tyhjät merkit
@@ -72,7 +78,7 @@ function heitaNoppaa() {
     }
 
     // Tarkistetaan voitto
-    if (pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] >= 100) {  
+    if (pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] >= tavoitePisteet) {  
         pisteet[aktiivinenPelaaja - 1] += kuluvanKierroksenPisteet[aktiivinenPelaaja - 1]; 
         document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1]; 
         viesti.textContent = "Pelaaja " + nimet[aktiivinenPelaaja - 1] + " on voittaja! Pisteet: " + pisteet[aktiivinenPelaaja - 1];
@@ -81,6 +87,7 @@ function heitaNoppaa() {
         return;
     }
 }
+
 
 function lopetaVuoro() {                                                                                                                                                                           
     if (tallennettuNimiLkm < 2) {   
@@ -94,7 +101,7 @@ function lopetaVuoro() {
     let viesti = document.getElementById("viesti");
 
     // Tarkistetaan voitto
-    if (pisteet[aktiivinenPelaaja - 1] >= 100) {        
+    if (pisteet[aktiivinenPelaaja - 1] >= tavoitePisteet) {        
         viesti.textContent = "Pelaaja " + nimet[aktiivinenPelaaja - 1] + " on voittaja! Pisteet: " + pisteet[aktiivinenPelaaja - 1];
         document.getElementById("heita").disabled = true;
         return; 
@@ -103,6 +110,7 @@ function lopetaVuoro() {
     vuoronVaihto();
     viesti.textContent = "Pelaajan " + nimet[aktiivinenPelaaja - 1] + " vuoro";
 }
+
 
 // Vuoron vaihto 
 function vuoronVaihto() {
@@ -121,6 +129,7 @@ function uusiPeli() {
     pisteet = [0, 0, 0, 0, 0, 0];
     tallennettuNimiLkm = 0;
     kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];
+    tavoitePisteet = 100;
 
     for (let i = 1; i <= 6; i++) {
         document.getElementById("nimi" + i).value = "";
@@ -136,9 +145,6 @@ function uusiPeli() {
 
     document.getElementById("viesti").textContent = "Kirjoita pelaajien nimet ja aloita peli!";
     document.getElementById("noppaKuva").src = "kuvat/dice_one.png"; 
-    document.getElementById("heita").disabled = false; 
-
-    for (let i = 1; i <= 6; i++) {
-        document.getElementById("pisteet" + i).textContent = "0";   
-    }
+    document.getElementById("heita").disabled = false;
+    document.getElementById("tavoitepisteet").value = 100; 
 }
