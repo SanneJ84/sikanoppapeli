@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("tavoitepisteet").addEventListener("change", function() {
         tavoitePisteet = parseInt(this.value);
         document.getElementById("viesti").textContent = "Tavoitepistemäärä asetettu: " + tavoitePisteet;
+        console.log("Tavoitepisteet asetettu: " + tavoitePisteet);
     });
 });
 
