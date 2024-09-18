@@ -1,19 +1,4 @@
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Kuuntelijat painikkeille
-    document.getElementById("heita").addEventListener("click", heitaNoppaa);
-    document.getElementById("lopeta").addEventListener("click", lopetaVuoro);
-    document.getElementById("uusiPeli").addEventListener("click", uusiPeli);
-    
-    // Kuuntelija tavoitepisteille
-    document.getElementById("tavoitepisteet").addEventListener("change", function() {
-        tavoitePisteet = parseInt(this.value);
-        document.getElementById("viesti").textContent = "Tavoitepistemäärä asetettu: " + tavoitePisteet;
-        console.log("Tavoitepisteet asetettu: " + tavoitePisteet);
-    });
-});
-
-let tavoitePisteet = 100;
+let tavoitePisteet = 100;                                                                                           // Tavoitepisteet pelissä (oletus 100)
 let nimet = [];                                                                                                     // Tallentaa pelaajien nimet
 let aktiivinenPelaaja = 1;                                                                                          // Aloitetaan pelaajasta 1
 let pisteet = [0, 0, 0, 0, 0, 0];                                                                                   // Pisteet kaikille pelaajille (enintään 6 pelaajaa)
@@ -21,6 +6,19 @@ let tallennettuNimiLkm = 0;                                                     
 let kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];                                                                  // Kuluvan kierroksen pisteet
 let tuplatHeitetty = 0;                                                                                             // Seuraa montako kertaa tuplat on heitetty
 
+// Kun sivu on ladattu, lisätään tapahtumankäsittelijät painikkeille ja tavoitepisteiden valintalaatikolle
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("heita").addEventListener("click", heitaNoppaa);
+    document.getElementById("lopeta").addEventListener("click", lopetaVuoro);
+    document.getElementById("uusiPeli").addEventListener("click", uusiPeli);
+    
+    document.getElementById("tavoitepisteet").addEventListener("change", function() {
+        tavoitePisteet = parseInt(this.value);
+        document.getElementById("viesti").textContent = "Tavoitepistemäärä asetettu: " + tavoitePisteet;
+        console.log("Tavoitepisteet asetettu: " + tavoitePisteet);
+    });
+});
 
 function tallennaNimi(pelaajaNumero) {
     let nimi = document.getElementById("nimi" + pelaajaNumero).value.trim();                                        // Haetaan pelaajan nimi ja poistetaan tyhjät merkit
@@ -52,7 +50,6 @@ function tallennaNimi(pelaajaNumero) {
         aktiivinenPelaaja = 1;                                                                                      // Asetetaan ensimmäinen pelaaja aktiiviseksi
     }
 }
-
 
 function heitaNoppaa() {
     if (tallennettuNimiLkm < 2) {
@@ -122,7 +119,7 @@ function heitaNoppaa() {
         document.getElementById("pisteet" + aktiivinenPelaaja).textContent = pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1];
     }
 
-    // Tarkistetaan, ylittääkö pelaajan kokonaispisteet 100
+    // Tarkistetaan voitto, jos pelaaja saavuttaa tavoitepisteet tai enemmän pelaaja voittaa
     if (pisteet[aktiivinenPelaaja - 1] + kuluvanKierroksenPisteet[aktiivinenPelaaja - 1] >= tavoitePisteet) {
         document.getElementById("viesti").textContent = nimet[aktiivinenPelaaja - 1] + " on voittanut pelin!";
         console.log(nimet[aktiivinenPelaaja - 1] + " on voittanut pelin!");
