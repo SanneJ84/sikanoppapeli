@@ -17,14 +17,7 @@ header {
     margin-bottom: 2rem;
 }
 
-.container2 {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem;
-    align-items: center;
-}
-
-.mycontainer {
+.pelaaja_container {
     display: flex;
     flex-direction: row; 
     justify-content: center;
@@ -32,28 +25,28 @@ header {
     margin-bottom: 2rem;
 }
 
-.mycontainer2 {
+.dice_control {
     display: flex; 
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 2rem;
 }
 
-.mycontainer2 button {
+.dice_control button {
     margin: 5px;
     padding: 15px 20px;
 }
 
-.mycontainer button {
+.pelaaja_container button {
     margin: 10px;
     padding: 5px 20px;
 }
 
-.mycontainer input {
+.pelaaja_container input {
     height: 30px;
 }
 
-.mycontainer img {
+.pelaaja_container img {
     width: 100px;
     height: auto;
     margin-bottom: 1rem;
@@ -113,7 +106,7 @@ ol {
     list-style-type: none;
 }
 
-.choice2 {
+.valikko {
     font-size: 1.1rem;
     color: #333;
     margin-bottom: 0.5rem;
@@ -171,4 +164,3 @@ img {
     height: auto;
     margin-bottom: 1rem;
 }
-

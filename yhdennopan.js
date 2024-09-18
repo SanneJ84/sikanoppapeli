@@ -13,22 +13,38 @@ let kuluvanKierroksenPisteet = [0, 0, 0, 0, 0, 0];                              
 
 
 function tallennaNimi(pelaajaNumero) {
-    let nimi = document.getElementById("nimi" + pelaajaNumero).value;                                               // Haetaan pelaajan nimi
-    if (nimi.trim() !== "") {                                                                                       // Tarkistetaan, että nimi ei ole tyhjä
-        nimet[pelaajaNumero - 1] = nimi;                                                                            // Tallennetaan nimi taulukkoon
-        document.getElementById("nimi" + pelaajaNumero).disabled = true;                                            // Estetään nimen muokkaus
-        document.getElementById("nimi" + pelaajaNumero).style.backgroundColor = "black";                            // Vaihdetaan taustaväri
-        document.getElementById("nimi" + pelaajaNumero).style.color = "white";                                      // Vaihdetaan tekstin väri
-        document.getElementById("nimi" + pelaajaNumero).style.textAlign = "center";                                 // Keskitetään teksti
-        tallennettuNimiLkm++;                                                                                       // Kasvatetaan tallennettujen nimien määrää
-        if (tallennettuNimiLkm === 2) {                                                                             // Kun vähintään 2 pelaajaa on tallentanut nimen
-            document.getElementById("viesti").textContent = "Peli voi alkaa! Pelaajan " + nimet[0] + " vuoro";      // Ilmoitetaan pelin alkamisesta
-            aktiivinenPelaaja = 1;                                                                                  // Asetetaan ensimmäinen pelaaja aktiiviseksi
-        }
+    let nimi = document.getElementById("nimi" + pelaajaNumero).value.trim();                                        // Haetaan pelaajan nimi ja poistetaan tyhjät merkit
+
+    let viesti = document.getElementById("viesti");
+    
+    // Tarkistetaan nimen pituus ja että nimi ei ole tyhjä tai jo käytössä
+    if (nimi === "") {
+        viesti.textContent = "Nimi ei voi olla tyhjä";
+        return;
+    } else if (nimi.length > 10) {
+        viesti.textContent = "Nimi ei saa olla pidempi kuin 10 merkkiä";
+        return;
+    } else if (nimet.includes(nimi)) {
+        viesti.textContent = "Nimi '" + nimi + "' on jo käytössä. Valitse toinen nimi";
+        return;
+    }
+
+    nimet[pelaajaNumero - 1] = nimi; 
+    document.getElementById("nimi" + pelaajaNumero).disabled = true;                                                // Estetään nimen muokkaus jos nimi on tallennettu
+    document.getElementById("nimi" + pelaajaNumero).style.backgroundColor = "black";                                // Vaihdetaan taustaväri
+    document.getElementById("nimi" + pelaajaNumero).style.color = "white";                                          // Vaihdetaan tekstin väri
+    document.getElementById("nimi" + pelaajaNumero).style.textAlign = "center";                                     // Keskitetään teksti
+    tallennettuNimiLkm++;                                                                                           // Kasvatetaan tallennettujen nimien määrää
+
+    // Tarkistetaan, onko vähintään 2 nimeä tallennettu
+    if (tallennettuNimiLkm === 2) { 
+        viesti.textContent = "Peli voi alkaa! Pelaajan " + nimet[0] + " vuoro";                                     // Ilmoitetaan pelin alkamisesta
+        aktiivinenPelaaja = 1;                                                                                      // Asetetaan ensimmäinen pelaaja aktiiviseksi
     }
 }
-function heitaNoppaa() {                                                                                            // Nopan heittäminen
-    if (tallennettuNimiLkm < 2) {                                                                                   // Tarkistetaan, että vähintään 2 pelaajaa on tallentanut nimen
+
+function heitaNoppaa() {                                                                                            
+    if (tallennettuNimiLkm < 2) {                                                                                   // Tarkistetaan, onko vähintään 2 pelaajaa
         document.getElementById("viesti").textContent = "Tarvitaan vähintään 2 pelaajaa, jotta peli voi alkaa!";
         console.error("Ei tarpeeksi pelaajia");
         return;
